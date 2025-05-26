@@ -1,7 +1,6 @@
 package com.ryansproject.stevejobs.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,14 +23,13 @@ public class JobPostController {
     private JobPostRepository jobPostRepository;
 
     @GetMapping
-    public List<JobPost> getAllJobs() {
+            public List<JobPost> getAllJobs() {
         return jobPostRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Optional<JobPost> getJobByTitleId(@PathVariable String id) {
-        return jobPostRepository.findById(id);
-    }
+     @GetMapping("/search/{title}")
+    public List<JobPost> getJobsByTitle(@PathVariable String title) {
+        return jobPostRepository.findByTitleContainingIgnoreCase(title);}
 
     @PostMapping
     public JobPost createJob(@RequestBody JobPost jobPost) {

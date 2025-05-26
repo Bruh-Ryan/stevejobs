@@ -13,12 +13,10 @@ try:
     jobs = res.json()
 
     for job in jobs:
-        st.subheader(f"🧾 {job.get('title', 'Untitled')}")
-        st.write(f"**Company:** {job.get('company', 'N/A')}")
-        st.write(f"**Location:** {job.get('location', 'N/A')}")
-        st.write(f"**Description:** {job.get('description', 'No description')}")
-        st.write(f"**ID:** `{job.get('id')}`")
+        st.subheader(job.get("title", "Untitled"))
+        st.write(f"📄 {job.get('description', 'No description')}")
         st.markdown("---")
+        
 except Exception as e:
     st.error(f"Failed to load job posts: {e}")
 
@@ -43,11 +41,11 @@ with st.form("create_job_form"):
         else:
             st.error("❌ Failed to create job.")
 
-# ----- Get a job by ID -----
+# ----- Get a job by String -----
 st.header("🔍 Get Job by ID")
 job_id = st.text_input("Enter Job ID to Fetch")
 if st.button("Fetch Job"):
-    r = requests.get(f"{BASE_URL}/{job_id}")
+    r = requests.get(f"{BASE_URL}/string/{job_id}")
     if r.status_code == 200:
         job = r.json()
         st.json(job)
