@@ -27,12 +27,14 @@ public class JobPostController {
         return jobPostRepository.findAll();
     }
 
+    //search by title
      @GetMapping("/search/{title}")
     public List<JobPost> getJobsByTitle(@PathVariable String title) {
         return jobPostRepository.findByTitleContainingIgnoreCase(title);}
 
     @PostMapping
     public JobPost createJob(@RequestBody JobPost jobPost) {
+        jobPost.setId(null);
         return jobPostRepository.save(jobPost);
     }
 
